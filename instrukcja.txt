@@ -1,0 +1,20 @@
+1. Ustaw nazwê Scenariusza w pasku u góry ekranu.
+2. Ustaw opis scenariusza, który musi byæ plikiem .docx.
+3. Przyciskiem dodaj stan dodawaj kolejne stany, a
+nastêpnie ³¹cz je ze stanem pocz¹tkowym i koñcowym
+(pamiêtaj, ¿e mo¿e byæ tylko jeden stan, koñcowy
+- wszystkie mo¿liwoœci koñcz¹ce scenariusz powinny
+po³¹czyæ siê ze stanem KONIEC).
+4. Nazwê stanu i dodatkowy opis ustawiasz w menu
+po prawej stronie.
+5. W menu po prawej stronie, tworzysz listê kontroln¹,
+dodaj¹c nowy warunek przyciskiem "Dodaj nowy" i edytuj¹c
+jego nazwê klikaj¹c dwukrotnie na dan¹ pozycjê na liœcie.
+Pamiêtaj, ¿e aby zapisaæ zmiany w liœcie kontrolnej
+musisz nacisn¹æ przycisk "Zapisz Listê".
+
+Skróty klawiszowe:
+
+ctrl + z - cofnij;
+delete - usuñ;
+ctrl + scroll - przybli¿anie, oddalanie widoku.
