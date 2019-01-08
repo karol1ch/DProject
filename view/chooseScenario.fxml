@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" styleClass="background" stylesheets="/appStyle.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" styleClass="background" stylesheets="/appStyle.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
          <center>
             <ListView fx:id="listView" maxWidth="700.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -40,6 +40,9 @@
          <bottom>
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" prefHeight="26.0" text="Usuń scenariusz" BorderPane.alignment="CENTER" />
          </bottom>
+         <top>
+            <Button fx:id="additionalFeaturesButton" mnemonicParsing="false" text="Dodatkowe Funkcjonalności" BorderPane.alignment="CENTER" />
+         </top>
       </BorderPane>
    </bottom>
    <top>

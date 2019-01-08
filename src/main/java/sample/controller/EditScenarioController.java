@@ -22,6 +22,7 @@ import sample.model.Scenario;
 import sample.model.State;
 import sample.utils.ScenarioGraphConverter;
 import sample.utils.ScenariosReaderWriter;
+import sample.viewInit.ChooseScenarioViewInitializer;
 
 import javax.swing.*;
 import java.io.File;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+import static sample.Main.init;
 
 public class EditScenarioController extends AbstractController {
 
@@ -154,7 +156,7 @@ public class EditScenarioController extends AbstractController {
 
         returnToMainMenu.setOnAction(event -> {
             try {
-                mainApp.initChooseScenarioView();
+                init(new ChooseScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }

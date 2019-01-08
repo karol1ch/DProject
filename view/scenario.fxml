@@ -17,7 +17,7 @@
    <top>
       <HBox prefHeight="50.0" spacing="100.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="returnToMainMenu" mnemonicParsing="false" onAction="#handleMainMenuButtonAction" prefWidth="180" text="Menu główne" />
+            <Button fx:id="returnToMainMenu" mnemonicParsing="false" prefWidth="180" text="Menu główne" />
              <Button fx:id="descriptionButton" mnemonicParsing="false" prefWidth="180" text="Otwórz opis" />
             <Button fx:id="restartButton" mnemonicParsing="false" text="Restart" />
             <Label fx:id="scenarioName" alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" styleClass="label-heading" textAlignment="CENTER">
@@ -49,7 +49,7 @@
    <bottom>
       <VBox fx:id="vBox" alignment="CENTER" prefHeight="250.0" prefWidth="1200.0" spacing="10.0" style="-fx-border-color: #808080;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleStartButtonAction" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
+            <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Start Scenario" textAlignment="CENTER" ButtonBar.buttonData="LEFT" />
          </children></VBox>
    </bottom>
    <center>

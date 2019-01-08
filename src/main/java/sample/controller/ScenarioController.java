@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -15,20 +14,23 @@ import javafx.util.Duration;
 import sample.Main;
 import sample.model.Scenario;
 import sample.model.State;
+import sample.viewInit.ChooseScenarioViewInitializer;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import static sample.Main.init;
 
 public class ScenarioController extends AbstractController {
 
     private Scenario currentScenario;
     private State currentState;
-    private State nextSa;
     private boolean firstLoop = false;
-    private int progressChange;
     private int secondsSum;
 
     private static final Integer STARTTIME = 0;
@@ -37,9 +39,9 @@ public class ScenarioController extends AbstractController {
     private int minute;
 
 
-    ObservableList <String> items = FXCollections.observableArrayList();
+    private ObservableList <String> items = FXCollections.observableArrayList();
 
-    List <CheckBox> checkBoxList = new ArrayList<>();
+    private List <CheckBox> checkBoxList = new ArrayList<>();
 
     @FXML
     private Button returnToMainMenu;
@@ -92,26 +94,7 @@ public class ScenarioController extends AbstractController {
         super(mainApp);
     }
 
-    @FXML
-    private void handleMainMenuButtonAction( ActionEvent actionEvent) throws IOException{
-        if(firstLoop) {
-            timeline.stop();
-        }
-        mainApp.initChooseScenarioView();
-    }
-
-    @FXML
-    private void handleStartButtonAction( ActionEvent actionEvent) throws IOException {
-        updateScenarioStateView();
-        checkList();
-        secondsSum = 0;
-        minute = 0;
-        firstLoop = false;
-        stopWatch();
-    }
-
     private void openFile(){
-
         try {
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + "OpisyScenariuszy" + File.separator + currentScenario.getPathToFile());
         } catch (IOException e) {
@@ -148,13 +131,13 @@ public class ScenarioController extends AbstractController {
 
     private void progress(){
 
-        progressChange = 0;
+        int progressChange = 0;
         for (CheckBox aCheckBoxList : checkBoxList) {
             if (aCheckBoxList.isSelected()) {
                 progressChange++;
             }
         }
-        double percents = (double)progressChange / (double)checkBoxList.size();
+        double percents = (double) progressChange / (double)checkBoxList.size();
         progressBar.setProgress(percents);
         percents*=100;
         percentsValue.setText(Integer.toString((int)percents) + " % ");
@@ -168,7 +151,7 @@ public class ScenarioController extends AbstractController {
             timeline.stop();
         }
         timeSeconds = STARTTIME;
-        timeLabel.setText(minute +" min  "+timeSeconds.toString()+" s");
+        timeLabel.setText(minute +" min  "+ timeSeconds.toString()+" s");
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(
@@ -204,8 +187,8 @@ public class ScenarioController extends AbstractController {
             progress();
         }
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listView.setItems(items);  // items -> stateHistoryList
-        addToList(currentState.getName());
+        listView.setItems(items);
+        items.add(currentState.getName());
         listView.scrollTo(items.size());
         List<Integer> children = currentState.getChildren();
         for(Integer integer: children){
@@ -237,11 +220,6 @@ public class ScenarioController extends AbstractController {
         firstLoop = true;
     }
 
-
-    public void addToList(String string){
-        items.add(string);
-    }
-
     @Override
     public void initialize (URL location, ResourceBundle resources) {
         currentScenario = mainApp.getAppState().getScenarioToShow();
@@ -249,7 +227,6 @@ public class ScenarioController extends AbstractController {
         try {
             currentState = currentScenario.getInitialState();
         } catch (Exception e) {
-            //TODO obsługa błędu
             e.printStackTrace();
         }
         scrollPane.setFitToWidth(true);
@@ -258,13 +235,35 @@ public class ScenarioController extends AbstractController {
             openFile();
         });
 
+
+        returnToMainMenu.setOnAction(event -> {
+            if(firstLoop) {
+                timeline.stop();
+            }
+            try {
+                init(new ChooseScenarioViewInitializer(mainApp).initView());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+        startButton.setOnAction(event -> {
+            updateScenarioStateView();
+            checkList();
+            secondsSum = 0;
+            minute = 0;
+            firstLoop = false;
+            stopWatch();
+        });
+
         restartButton.setOnAction(event -> {
             mainApp.getAppState().setScenarioToShow(currentScenario);
             try {
                 if(firstLoop){
                 timeline.stop();}
 
-                mainApp.initScenarioView();
+                init(new ChooseScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }

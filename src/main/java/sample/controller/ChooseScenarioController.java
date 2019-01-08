@@ -11,12 +11,18 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import sample.Main;
 import sample.model.Scenario;
+import sample.viewInit.AdditionalViewInitializer;
+import sample.viewInit.ChangeScenarioViewInitializer;
+import sample.viewInit.ChooseScenarioViewInitializer;
+import sample.viewInit.ScenarioViewInitializer;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static sample.Main.init;
 
 public class ChooseScenarioController extends AbstractController{
 
@@ -34,6 +40,9 @@ public class ChooseScenarioController extends AbstractController{
 
     @FXML
     private Button deleteButton;
+
+    @FXML
+    private Button additionalFeaturesButton;
 
     @FXML
     private GridPane gridPane;
@@ -98,7 +107,7 @@ public class ChooseScenarioController extends AbstractController{
             file1.delete();
             file2.delete();
             try {
-                mainApp.initChooseScenarioView();
+                init(new ChooseScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -106,8 +115,9 @@ public class ChooseScenarioController extends AbstractController{
 
         runScenarioButton.setOnAction(event -> {
             mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
+
             try {
-                mainApp.initScenarioView();
+                init(new ScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -118,7 +128,7 @@ public class ChooseScenarioController extends AbstractController{
             mainApp.getAppState().setScenarioToShow(listView.getSelectionModel().getSelectedItem());
 
             try {
-                mainApp.initChangeScenarioView();
+                init(new ChangeScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -130,11 +140,19 @@ public class ChooseScenarioController extends AbstractController{
             mainApp.getAppState().setScenarioToShow(null);
 
             try {
-                mainApp.initChangeScenarioView();
+                init(new ChangeScenarioViewInitializer(mainApp).initView());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+        });
+
+        additionalFeaturesButton.setOnAction(event -> {
+            try {
+                init(new AdditionalViewInitializer(mainApp).initView());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
     }
