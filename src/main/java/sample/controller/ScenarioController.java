@@ -44,10 +44,14 @@ public class ScenarioController extends AbstractController {
     private List <CheckBox> checkBoxList = new ArrayList<>();
 
     @FXML
+    private Button undoButton;
+
+    @FXML
     private Button returnToMainMenu;
 
     @FXML
     private  Button startButton;
+
     @FXML
     private Label scenarioName;
 
@@ -139,7 +143,7 @@ public class ScenarioController extends AbstractController {
         }
         double percents = (double) progressChange / (double)checkBoxList.size();
         progressBar.setProgress(percents);
-        percents*=100;
+        percents *= 100;
         percentsValue.setText(Integer.toString((int)percents) + " % ");
 
     }
@@ -182,7 +186,6 @@ public class ScenarioController extends AbstractController {
 
 
     private void updateScenarioStateView() {
-
         if(firstLoop){
             progress();
         }
@@ -214,7 +217,6 @@ public class ScenarioController extends AbstractController {
             secondsSum = secondsSum % 60;
             Label label = new Label("Czas scenariusza: " + minute + " minut  " + secondsSum + " sekund");
             vBox.getChildren().add(label);
-
 
         }
         firstLoop = true;

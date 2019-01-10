@@ -1,17 +1,26 @@
 package sample.factory;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class OtherThing implements FirstAidThings {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OtherThing implements FirstAidThing {
 
     private String name;
-    private String description;
-    private boolean isInKit;
+    private boolean isTrue;
 
     @Override
     public void addToFirstAidKit() {
-        System.out.println("Dodaje " + name + ", o następującym zastosowaniu:");
-        System.out.println(description);
+        System.out.println("Dodaje " + name);
+    }
+
+    @Override
+    public boolean isTrueOption() {
+        return isTrue;
     }
 }

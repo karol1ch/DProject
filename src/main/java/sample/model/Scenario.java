@@ -56,8 +56,4 @@ public class Scenario implements Serializable {
         scenario.setCheckListStates(new LinkedList<>());
         return scenario;
     }
-
-    public Integer getNextId() {
-        return getStates().keySet().stream().max(Integer::compareTo).get()+1;
-    }
 }

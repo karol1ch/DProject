@@ -18,7 +18,6 @@ public class ScenariosReaderWriter {
 
     public List<Scenario> loadScenarios(String pathname) throws IOException {
         return Files.walk(Paths.get(pathname))
-                //.filter(path -> path.endsWith("txt"))
                 .map(Path::toFile)
                 .filter(File::isFile)
                 .map(file -> file.getPath().endsWith("format")?deserializeScenario(file):readScenarioFromFile(file))

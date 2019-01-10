@@ -3,8 +3,8 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import sample.Main;
+import sample.firstAidKitMiniGame.GameController;
 import sample.viewInit.ChooseScenarioViewInitializer;
-import sample.viewInit.FirstAidKitInitializer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,16 +12,19 @@ import java.util.ResourceBundle;
 
 import static sample.Main.init;
 
-public class AdditionalController extends AbstractController {
+public class FirstAidKitController extends AbstractController {
 
     @FXML
     private Button mainMenuButton;
 
     @FXML
-    private Button firstAidKitButton;
+    private Button startGameButton;
 
-    public AdditionalController(Main mainApp) {
+    private GameController gameController;
+
+    public FirstAidKitController(Main mainApp) {
         super(mainApp);
+        gameController = new GameController();
     }
 
     @Override
@@ -35,12 +38,9 @@ public class AdditionalController extends AbstractController {
             }
         });
 
-        firstAidKitButton.setOnAction(event -> {
-            try {
-                init(new FirstAidKitInitializer(mainApp).initView());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        startGameButton.setOnAction(event -> {
+            gameController.startGame();
         });
+
     }
 }

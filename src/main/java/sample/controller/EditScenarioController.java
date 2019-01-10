@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.editor.GraphEditor;
+import sample.memento.CareTaker;
 import sample.model.Scenario;
 import sample.model.State;
 import sample.utils.ScenarioGraphConverter;
@@ -52,6 +53,7 @@ public class EditScenarioController extends AbstractController {
 
     @FXML
     private Button addNewVertexButton;
+
     @FXML
     private Button setDesc;
 
@@ -95,11 +97,13 @@ public class EditScenarioController extends AbstractController {
 
     private GraphEditor graphEditor;
 
+    private CareTaker careTaker = new CareTaker();
+
     public EditScenarioController(Main mainApp) {
         super(mainApp);
     }
 
-    public static String loadFromFile() throws IOException{
+    private static String loadFromFile() throws IOException{
         return Files.lines(Paths.get("instrukcja.txt"), Charset.forName("Cp1250"))
                 .collect(Collectors.joining("\n"));
     }
@@ -112,16 +116,12 @@ public class EditScenarioController extends AbstractController {
         textCell.setMouseTransparent(true);
         textCell.setFocusTraversable(false);
 
-
         currentScenario = mainApp.getAppState().getScenarioToShow();
         if (currentScenario == null) {
             currentScenario = createEmptyScenario();
         }
         scenarioName.setText(currentScenario.getName());
-        System.out.println(currentScenario.getName());
-        System.out.println(currentScenario.getPathToFile());
         pathToFile = currentScenario.getPathToFile();
-
 
         ObservableList<String> items = FXCollections.observableArrayList(currentScenario.getCheckListStates());
         list = new ListView<>(items);
@@ -130,11 +130,7 @@ public class EditScenarioController extends AbstractController {
         list.setCellFactory(TextFieldListCell.forListView());
         list.setEditable(true);
 
-        list.setOnMouseClicked(event -> {
-            textCell.setText(list.getSelectionModel().getSelectedItem().toString());
-        });
-
-
+        list.setOnMouseClicked(event -> textCell.setText(list.getSelectionModel().getSelectedItem().toString()));
 
         addNewStringButton.setOnAction(event -> {
             String s = "Podaj nazwę";
@@ -142,9 +138,8 @@ public class EditScenarioController extends AbstractController {
             list.scrollTo(items.size());
 
         });
+
         checkListBox.getChildren().add(0,list);
-
-
 
         saveCheckListButton.setOnAction(event -> {
             currentScenario.getCheckListStates().clear();
@@ -152,7 +147,6 @@ public class EditScenarioController extends AbstractController {
                 currentScenario.getCheckListStates().add(s);
             }
         });
-
 
         returnToMainMenu.setOnAction(event -> {
             try {
@@ -185,7 +179,6 @@ public class EditScenarioController extends AbstractController {
         });
 
         saveButton.setOnAction(event -> {
-
             if(pathToFile.equals("")) {
                 setErrorDialog("Nie dodano pliku z opisem.");
             }
@@ -212,7 +205,6 @@ public class EditScenarioController extends AbstractController {
         });
 
         setDesc.setOnAction(event -> {
-
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Dodaj plik z opisem");
             File selectedFile = fileChooser.showOpenDialog(new Stage());
@@ -222,21 +214,16 @@ public class EditScenarioController extends AbstractController {
             else{
                 setErrorDialog("Plik nie jest plikiem docx.");
             }
-
-
-
         });
 
-
         stateNameEdit.textProperty().addListener((observable, oldValue, newValue) -> {
-
             if(currentEditedState != null){
                 currentEditedState.setName(newValue);
                 graph.refresh();
             }
         });
-        stateDescriptionEdit.textProperty().addListener((observable, oldValue, newValue) -> {
 
+        stateDescriptionEdit.textProperty().addListener((observable, oldValue, newValue) -> {
             if(currentEditedState != null){
                 currentEditedState.setDescription(newValue);
                 graph.refresh();
@@ -247,7 +234,6 @@ public class EditScenarioController extends AbstractController {
             currentScenario.setName(newValue);
             graph.refresh();
         });
-
 
         graph = ScenarioGraphConverter.scenarioToGraph(currentScenario);
         graph.setCellsEditable(false);

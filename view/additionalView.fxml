@@ -5,10 +5,10 @@
 
 <BorderPane fx:id="borderPane" styleClass="background" stylesheets="/appStyle.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+      <Button fx:id="mainMenuButton" mnemonicParsing="false" text="Menu główne" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+      <Button fx:id="firstAidKitButton" mnemonicParsing="false" text="Apteczka - gra" BorderPane.alignment="CENTER" />
    </left>
    <center>
       <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
