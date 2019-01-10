@@ -26,7 +26,6 @@ public class GameController {
     private GameView gameView;
     private List<FirstAidThing> trueList;
     private FakeFirstAidThingsFactory factory;
-    private List<FirstAidThing> threeOptions = new ArrayList<>();
 
     public GameController(){
         gameView = new GameView();
@@ -50,6 +49,7 @@ public class GameController {
         prepareGame();
         do{
             List<FirstAidThing> tempThreeOptions = generateOptions();
+            List<FirstAidThing> threeOptions = new ArrayList<>();
             for( int i = 0; i < 3; i++) {
                 randomIndex = rand.nextInt(tempThreeOptions.size());
                 System.out.print(i + ": ");
@@ -77,9 +77,9 @@ public class GameController {
                     StrategyContext strategyContext = new StrategyContext(new ThirdLevel());
                     System.out.println(strategyContext.executeStrategy(points));
                 }
-                System.out.println(points);
                 condition = false;
             }
+
 
         } while(condition);
 
