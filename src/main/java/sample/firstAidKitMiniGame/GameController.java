@@ -3,8 +3,15 @@ package sample.firstAidKitMiniGame;
 import sample.factory.FakeFirstAidThingsFactory;
 import sample.factory.FirstAidThing;
 import sample.factory.MockedObjects;
+import sample.strategy.FirstLevel;
+import sample.strategy.SecondLevel;
+import sample.strategy.StrategyContext;
+import sample.strategy.ThirdLevel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GameController {
 
@@ -58,6 +65,18 @@ public class GameController {
             }
             else{
                 System.out.println("Koniec. Twój wynik to:");
+                if(points < 3){
+                    StrategyContext strategyContext = new StrategyContext(new FirstLevel());
+                    System.out.println(strategyContext.executeStrategy(points));
+                }
+                else if(points > 3 && points < 5){
+                    StrategyContext strategyContext = new StrategyContext(new SecondLevel());
+                    System.out.println(strategyContext.executeStrategy(points));
+                }
+                else{
+                    StrategyContext strategyContext = new StrategyContext(new ThirdLevel());
+                    System.out.println(strategyContext.executeStrategy(points));
+                }
                 System.out.println(points);
                 condition = false;
             }
