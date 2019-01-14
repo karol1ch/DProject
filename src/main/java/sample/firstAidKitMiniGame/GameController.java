@@ -1,6 +1,5 @@
 package sample.firstAidKitMiniGame;
 
-import sample.factory.FakeFirstAidThingsFactory;
 import sample.factory.FirstAidThing;
 import sample.factory.MockedObjects;
 import sample.strategy.FirstLevel;
@@ -20,18 +19,16 @@ public class GameController {
 
     private int points;
     private boolean condition;
-    int randomIndex;
-    int answer;
+    private int randomIndex;
+    private int answer;
 
     private GameView gameView;
     private List<FirstAidThing> trueList;
-    private FakeFirstAidThingsFactory factory;
 
     public GameController(){
         gameView = new GameView();
         MockedObjects mockedObjects = new MockedObjects();
         trueList = mockedObjects.createTrueObjects();
-        factory = new FakeFirstAidThingsFactory();
     }
 
     public void startGame(){
@@ -102,8 +99,8 @@ public class GameController {
         randomIndex = rand.nextInt(trueList.size());
         FirstAidThing p1 = trueList.get(randomIndex);
         trueList.remove(randomIndex);
-        FirstAidThing p2 = factory.getFirstAidThings(p1.getClass().getName());
-        FirstAidThing p3 = factory.getFirstAidThings(p1.getClass().getName());
+        FirstAidThing p2 = p1.createFakeObject();
+        FirstAidThing p3 = p1.createFakeObject();
         List<FirstAidThing> list = new ArrayList<>();
         list.add(p1);
         list.add(p2);

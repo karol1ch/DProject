@@ -11,4 +11,9 @@ public class NullFirstAidThing implements FirstAidThing {
     public boolean isTrueOption() {
         return false;
     }
+
+    @Override
+    public FirstAidThing createFakeObject() {
+        return new NullFirstAidThing();
+    }
 }
